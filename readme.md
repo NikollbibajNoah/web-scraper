@@ -7,13 +7,10 @@ It is a learning project to practice web scraping, software-architecture and sec
 getting scraped with python and sent with message broker to spring boot backend which handles data
 correctly and saves it to database.
 
----
-
 ## Table of Contents
 - [Features](#features)
 - [Technologies](#technologies)
 - [Installation](#installation)
----
 
 ## Features
 - Data scraping from job listing website
