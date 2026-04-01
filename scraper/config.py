@@ -1,0 +1,1 @@
+## Move vars from scraper here
