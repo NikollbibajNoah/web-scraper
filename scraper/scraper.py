@@ -2,17 +2,14 @@ from playwright.sync_api import sync_playwright
 from urllib.parse import urlencode
 import re
 
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
-KEYWORD='applikationsentwickler'
-MAX_PAGES = 10
-REGIONS = {
-    'st.gallen': 17,
-    'winterthur': 18,
-    'thurgau': 21,
-    'schaffhausen': 25
-}
+from rabbitmq import publish
 
-def build_url(page: int, keyword: str, regions: list[int]) -> str:
+from config import USER_AGENT, KEYWORD, MAX_PAGES, REGIONS
+
+def build_url(page: int, keyword: str, regions: list[int] | None = None) -> str:
+    if regions is None:
+        regions = list(REGIONS.values())
+
     params = [('term', keyword), ('page', page)]
 
     for region in regions:
@@ -81,9 +78,13 @@ def scrape(keyword=KEYWORD, max_pages=MAX_PAGES, regions=list(REGIONS.values()))
                     'location': location.inner_text() if location else 'N/A',
                     'company': company.inner_text() if company else 'N/A',
                     'published': published.inner_text() if published else 'N/A',
+                    'url': url
                 }
 
                 all_jobs.append(job)
+
+                # publish to rabbitmq queue
+                publish(job)
 
                 print('Titel: ', title.inner_text() if title else 'N/A')
                 print('Ort: ', location.inner_text() if location else 'N/A')
