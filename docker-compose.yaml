@@ -1,4 +1,16 @@
 services:
+  db:
+    image: postgres
+    container_name: postgres
+    ports:
+        - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+        POSTGRES_USER: ${POSTGRES_USER:-user}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+        POSTGRES_DB: ${POSTGRES_DB:-db}
+    volumes:
+        - postgres-data:/var/lib/postgresql/data
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
@@ -6,8 +18,8 @@ services:
       - "${RABBITMQ_PORT}:5672"
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-password}
     volumes:
       - rabbitmq-lib:/var/lib/rabbitmq/
       - rabbitmq-log:/var/log/rabbitmq
@@ -17,3 +29,4 @@ volumes:
     driver: local
   rabbitmq-log:
     driver: local
+  postgres-data:

@@ -15,6 +15,7 @@ correctly and saves it to database.
 ## Features
 - Data scraping from job listing website
 - Data handling and monitoring with message broker
+- Store scraped data from listener into database with jpa
 
 ## Technologies
 Following technologies are used in this project:
@@ -22,8 +23,12 @@ Following technologies are used in this project:
 - Python 3.14
 - Docker
 - RabbitMQ (rabbitmq 3-management)
+- Spring Boot (Springboot 4.05, Java 26)
+- PostgreSQL (Latest)
 
 ## Installation
+
+### Scraper
 To run this project, make sure **Docker** is installed and working and (recommended) **Python 3.14** installed.
 If ready follow the steps below:
 1. Clone repository
@@ -31,4 +36,4 @@ If ready follow the steps below:
 3. Inside **/scraper** run ```pip install```
 4. Inside project root run ```docker compose up --build -d```
 5. Inside **/scraper** run ```python main.py``` (or in project root ```python scraper/main.py```)
-6. Open rabbitmq dashboard at: http://localhost:15672/#/ to see scraped data 
+6. Open rabbitmq dashboard at: http://localhost:15672/#/ to see scraped data
