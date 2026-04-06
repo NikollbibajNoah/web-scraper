@@ -12,9 +12,9 @@ spring:
     password: ${RABBITMQ_DEFAULT_PASS:password}
 
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:jobs}
-    username: ${DB_USER:user}
-    password: ${DB_PASSWORD:password}
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:jobs}
+    username: ${POSTGRES_USER:user}
+    password: ${POSTGRES_PASSWORD:password}
 
   jpa:
     hibernate:
@@ -26,3 +26,6 @@ spring:
 
 rabbitmq:
   queue: ${RABBITMQ_QUEUE:jobs}
+
+allowedOrigin:
+  url: ${ALLOWED_ORIGIN_URL:http://localhost:3000}
