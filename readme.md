@@ -93,14 +93,14 @@ In root of the project, there is a `.env.example` file which contains all the en
 
 ```env
 # Postgres DB
-POSTGRES_HOST=db
+POSTGRES_HOST=db # The hostname of the Postgres container (leave unchanged)
 POSTGRES_PORT=5432
 POSTGRES_USER=user
 POSTGRES_PASSWORD=password
 POSTGRES_DB=jobs
 
 # Rabbitmq
-RABBITMQ_HOST=rabbitmq
+RABBITMQ_HOST=rabbitmq # The hostname of the RabbitMQ container (leave unchanged)
 RABBITMQ_PORT=5672
 RABBITMQ_DEFAULT_USER=user
 RABBITMQ_DEFAULT_PASS=password
@@ -112,6 +112,9 @@ RABBITMQ_VHOST=/
 SERVER_PORT=8080
 ALLOWED_ORIGIN_URL=http://localhost:3000
 ```
+> [!NOTE]
+> Postgres and RabbitMQ Hostname must be identical to the service names in `docker-compose.yml` (db and rabbitmq) because they will be running in the same Docker network.
+
 
 ## Installation
 To run this project, make sure **Docker** is installed and working.
