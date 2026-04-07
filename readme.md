@@ -2,10 +2,9 @@
 > This project is work in progress and is not yet complete. The README will be updated as the project progresses.
 
 # Web Scraper
-This project is a web scraper built with Python 3.14 using message broker to connect systems.
-It is a learning project to practice web scraping, software-architecture, microservices and security. Data is
-getting scraped with python and sent with message broker to spring boot backend which handles data
-correctly and saves it to database.
+A full-stack web scraping project following a **microservices architecture**.
+Jobs are scraped from jobs.ch with Python, sent via RabbitMQ to a Spring Boot backend
+which filters duplicates, persists the data in PostgreSQL and exposes a REST API for querying.
 
 ## Table of Contents
 - [Features](#features)
