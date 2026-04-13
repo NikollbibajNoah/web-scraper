@@ -27,4 +27,4 @@ def publish(data: dict):
         )
     )
     connection.close()
-    print(f'Gesendet:', data)
+    print('Gesendet:', data)
