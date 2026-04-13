@@ -58,9 +58,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Create .env from .env.example (CI)
+        run: |
+          if [ -f .env.example ]; then
+            cp .env.example .env
+          else
+            echo ".env.example not found" >&2
+            exit 1
+          fi
+
       - name: Validate compose file
         run: docker compose -f docker-compose.yaml config
 
       # Optional: build all images defined in compose (fails fast if Dockerfiles are broken)
       - name: Build images
         run: docker compose -f docker-compose.yaml build --pull
+
+      - name: Cleanup .env
+        if: always()
+        run: rm -f .env
