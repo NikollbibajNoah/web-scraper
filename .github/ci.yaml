@@ -1,0 +1,54 @@
+on:
+  push:
+  pull_request:
+
+jobs:
+  python-quality:
+    name: Python quality (ruff + compile)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements
+          pip install ruff
+
+      - name: Ruff lint
+        run: ruff check .
+
+      - name: Python syntax check
+        run: python -m compileall .
+
+  java-build:
+    name: Java build (Maven, skip tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+          cache: "maven"
+
+      - name: Maven package (skip tests)
+        run: mvn -B -DskipTests package
+
+  docker-validate:
+    name: Docker/Compose validate + build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate compose file
+        run: docker compose -f docker-compose config
+
+      # Optional: build all images defined in compose (fails fast if Dockerfiles are broken)
+      - name: Build images
+        run: docker compose -f docker-compose build --pull
